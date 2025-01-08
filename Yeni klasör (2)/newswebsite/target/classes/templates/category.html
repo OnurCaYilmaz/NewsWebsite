@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<head>
+    <title th:text="${category + ' Haberleri - Haber Portalı'}">Kategori Haberleri</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="d-flex align-items-center mb-4">
+            <h2 class="mb-0">
+                <i class="fas fa-folder me-2"></i>
+                <span th:text="${category}">Kategori</span> Haberleri
+            </h2>
+            <span class="badge bg-primary ms-3 fs-6" th:text="${categoryNews.size() + ' haber'}">0 haber</span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="news : ${categoryNews}">
+                <div class="card h-100">
+                    <div class="position-relative">
+                        <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" 
+                             class="card-img-top" style="height: 200px; object-fit: cover;" alt="Haber Görseli">
+                        <img th:unless="${news.imageUrl}" src="https://via.placeholder.com/300x200" 
+                             class="card-img-top" alt="Varsayılan Görsel">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-2" 
+                              th:text="${news.category}">Kategori</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${news.title}">Haber Başlığı</h5>
+                        <p class="card-text" th:text="${news.description}">Haber Açıklaması</p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="far fa-clock me-1"></i>
+                                <span th:text="${#temporals.format(news.createdAt, 'dd/MM/yyyy HH:mm')}">Tarih</span>
+                            </small>
+                            <a th:href="@{'/news/' + ${news.id}}" class="btn btn-sm btn-outline-primary">
+                                Devamını Oku <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Haber Bulunamadı Mesajı -->
+        <div th:if="${categoryNews.empty}" class="alert alert-info text-center">
+            <i class="fas fa-info-circle me-2"></i>
+            Bu kategoride henüz haber bulunmuyor.
+        </div>
+    </div>
+</body>
+</html>

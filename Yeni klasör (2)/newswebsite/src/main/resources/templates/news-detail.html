@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<head>
+    <title th:text="${news.title + ' - Haber Portalı'}">Haber Detay</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="card shadow-sm">
+            <div class="position-relative">
+                <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" 
+                     class="card-img-top" style="height: 400px; object-fit: cover;" alt="Haber Görseli">
+                <img th:unless="${news.imageUrl}" src="https://via.placeholder.com/1200x400" 
+                     class="card-img-top" alt="Varsayılan Görsel">
+                <span class="badge bg-primary position-absolute top-0 end-0 m-3" 
+                      th:text="${news.category}">Kategori</span>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title mb-3" th:text="${news.title}">Haber Başlığı</h1>
+                <div class="d-flex align-items-center text-muted mb-4">
+                    <i class="far fa-clock me-2"></i>
+                    <span th:text="${#temporals.format(news.createdAt, 'dd MMMM yyyy HH:mm')}">Tarih</span>
+                    <i class="fas fa-tag ms-4 me-2"></i>
+                    <a th:href="@{'/category/' + ${news.category}}" 
+                       class="text-decoration-none" th:text="${news.category}">Kategori</a>
+                </div>
+                <p class="lead mb-4" th:text="${news.description}">Haber Özeti</p>
+                <div class="card-text" th:utext="${news.content}">Haber İçeriği</div>
+            </div>
+        </div>
+
+        <!-- Düzenleme ve Silme Butonları -->
+        <div class="mt-4 d-flex justify-content-end">
+            <a th:href="@{'/edit-news/' + ${news.id}}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i> Düzenle
+            </a>
+            <a th:href="@{'/delete-news/' + ${news.id}}" class="btn btn-danger" 
+               onclick="return confirm('Bu haberi silmek istediğinizden emin misiniz?')">
+                <i class="fas fa-trash me-1"></i> Sil
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<head>
+    <title>Ana Sayfa - Haber Portalı</title>
+</head>
+<body>
+    <section th:fragment="content">
+        <!-- Slider -->
+        <div id="newsSlider" class="carousel slide mb-4 rounded shadow" data-bs-ride="carousel" th:if="${not #lists.isEmpty(latestNews)}">
+            <div class="carousel-indicators">
+                <button th:each="news, iter : ${latestNews}" 
+                        th:if="${iter.index < 3}"
+                        type="button" 
+                        data-bs-target="#newsSlider" 
+                        th:data-bs-slide-to="${iter.index}" 
+                        th:class="${iter.index == 0 ? 'active' : ''}"
+                        aria-current="true">
+                </button>
+            </div>
+            <div class="carousel-inner rounded">
+                <div th:each="news, iter : ${latestNews}" 
+                     th:if="${iter.index < 3}"
+                     th:class="${'carousel-item' + (iter.index == 0 ? ' active' : '')}">
+                    <img th:src="${news.imageUrl != null ? news.imageUrl : 'https://via.placeholder.com/1200x400'}" 
+                         class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Haber Görseli">
+                    <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.5); border-radius: 10px; padding: 20px;">
+                        <span class="badge bg-primary mb-2" th:text="${news.category}">Kategori</span>
+                        <h3 th:text="${news.title}">Haber Başlığı</h3>
+                        <p th:text="${news.description}">Haber Açıklaması</p>
+                        <a th:href="@{'/news/' + ${news.id}}" class="btn btn-warning">Devamını Oku</a>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#newsSlider" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Önceki</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#newsSlider" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Sonraki</span>
+            </button>
+        </div>
+
+        <!-- Son Haberler -->
+        <div class="row mb-4">
+            <div class="col">
+                <h2 class="border-bottom pb-2">
+                    <i class="fas fa-newspaper me-2"></i>Son Haberler
+                </h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="news : ${latestNews}">
+                <div class="card h-100">
+                    <div class="position-relative">
+                        <img th:if="${news.imageUrl}" th:src="${news.imageUrl}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Haber Görseli">
+                        <img th:unless="${news.imageUrl}" src="https://via.placeholder.com/300x200" class="card-img-top" alt="Varsayılan Görsel">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-2" th:text="${news.category}">Kategori</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${news.title}">Haber Başlığı</h5>
+                        <p class="card-text" th:text="${news.description}">Haber Açıklaması</p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="far fa-clock me-1"></i>
+                                <span th:text="${#temporals.format(news.createdAt, 'dd/MM/yyyy HH:mm')}">Tarih</span>
+                            </small>
+                            <a th:href="@{'/news/' + ${news.id}}" class="btn btn-sm btn-outline-primary">
+                                Devamını Oku <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

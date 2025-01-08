@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haber Sitesi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background: linear-gradient(45deg, #1a237e, #311b92);
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+
+        .card {
+            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .footer {
+            background: linear-gradient(45deg, #1a237e, #311b92);
+            color: white;
+            padding: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-newspaper me-2"></i>
+                Haber Portalı
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home me-1"></i> Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/category/Spor"><i class="fas fa-running me-1"></i> Spor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/category/Ekonomi"><i class="fas fa-chart-line me-1"></i> Ekonomi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/category/Teknoloji"><i class="fas fa-microchip me-1"></i> Teknoloji</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add-news"><i class="fas fa-plus-circle me-1"></i> Haber Ekle</a>
+                    </li>
+                </ul>
+                <form class="d-flex" action="/search" method="get">
+                    <div class="input-group">
+                        <input class="form-control" type="search" name="keyword" placeholder="Haber ara...">
+                        <button class="btn btn-warning" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik -->
+    <div class="container my-4">
+        <div th:replace="~{::content}">
+            <!-- Sayfa içeriği buraya gelecek -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-newspaper me-2"></i> Haber Portalı</h5>
+                    <p>Güncel haberlerin güvenilir adresi. En son gelişmelerden anında haberdar olun.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Hızlı Erişim</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/category/Spor" class="text-white text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Spor</a></li>
+                        <li><a href="/category/Ekonomi" class="text-white text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Ekonomi</a></li>
+                        <li><a href="/category/Teknoloji" class="text-white text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Teknoloji</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Bizi Takip Edin</h5>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Haber Portalı. Tüm hakları saklıdır.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="text-white text-decoration-none me-3">Gizlilik Politikası</a>
+                    <a href="#" class="text-white text-decoration-none">İletişim</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
